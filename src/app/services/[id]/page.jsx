@@ -75,12 +75,7 @@ const ServiceDetails = async ({ params }) => {
 
                         {/* Second Description Block */}
                         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-                            <p className="text-gray-600 leading-relaxed">
-                                There Are Many Variations Of Passages Of Lorem Ipsum Available, But The Majority Have Suffered
-                                Alteration In Some Form, By Injected Humour, Or Randomised Words Which Don't Look Even
-                                Slightly Believable. If You Are Going To Use A Passage Of Lorem Ipsum, You Need To Be Sure There
-                                Isn't Anything Embarrassing Hidden In The Middle Of Text.
-                            </p>
+                            <p className="text-gray-600 leading-relaxed">{service.additional_details}</p>
                         </div>
 
                         {/* 3 Simple Steps to Process Section */}
