@@ -22,7 +22,7 @@ const VideoPlayer = ({ service }) => {
                     <div className="absolute inset-0 bg-black/20 bg-opacity-40 hover:bg-opacity-60 transition flex items-center justify-center">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-20 w-20 text-white hover:scale-110 transition"
+                            className="h-20 w-20 text-red-500 border-red-500 rounded-full border-2  hover:scale-110 transition"
                             fill="currentColor"
                             viewBox="0 0 24 24"
                         >

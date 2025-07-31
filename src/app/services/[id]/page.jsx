@@ -4,6 +4,8 @@ import Image from 'next/image';
 import React from 'react';
 import ServiceBanner from '../ServiceBanner/ServiceBanner';
 import VideoPlayer from '../VideoPlayer/VideoPlayer';
+import Link from 'next/link';
+import ActiveLink from '@/app/components/ActiveLink';
 
 const ServiceDetails = async ({ params }) => {
     const id = params?.id;
@@ -71,7 +73,7 @@ const ServiceDetails = async ({ params }) => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                             {
                                 service.facility.map((f, i) => (
-                                    <div key={i} className="bg-white p-6 rounded-lg shadow-md border-t-3 border-secondary/50">
+                                    <div key={i} className="bg-base-300 p-6 rounded-lg shadow-md border-t-3 border-secondary/50">
                                         <h3 className="text-xl font-semibold text-gray-800 mb-2">{f.name}</h3>
                                         <p className="text-gray-600">{f.details}</p>
                                     </div>
@@ -114,24 +116,6 @@ const ServiceDetails = async ({ params }) => {
                             </div>
 
                             {/* Large Image with Play Button */}
-                            {/* <div className="relative w-full rounded-lg overflow-hidden shadow-lg h-60 md:h-[400px] flex items-center justify-center">
-                                {service.youtube_video_link ? (
-                                    <iframe
-                                        className="absolute inset-0 w-full h-full"
-                                        src={service.youtube_video_link.replace("watch?v=", "embed/")}
-                                        title={`${service.title} Video`}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                    ></iframe>
-                                ) : (
-                                    <img
-                                        src="https://repairsmith-prod-wordpress.s3.amazonaws.com/2022/09/car-repair.jpg" // Placeholder if no video link
-                                        alt="Video not available"
-                                        className="absolute inset-0 w-full h-full object-cover"
-                                    />
-                                )}
-                            </div> */}
                             <VideoPlayer service={cleanService}></VideoPlayer>
                         </div>
                     </div>
@@ -139,17 +123,17 @@ const ServiceDetails = async ({ params }) => {
                     {/* Right Column - Sidebar */}
                     <div className="lg:w-1/3 space-y-8">
                         {/* Services Section */}
-                        <div className="bg-base-100 p-6 rounded-lg shadow-md">
+                        <div className="bg-base-300 p-6 rounded-lg shadow-md">
                             <h3 className="text-xl font-semibold text-gray-800 mb-4">Services</h3>
                             <ul className="space-y-3">
                                 {services.map((s, index) => (
                                     <li key={index}>
-                                        <a href="#" className="flex items-center justify-between bg-gray-100 text-gray-800 py-3 px-4 rounded-md hover:bg-red-600 hover:text-white transition-colors duration-300">
+                                        <ActiveLink href={`/services/${s._id}`} activeClassName='bg-secondary text-white' className="group flex items-center justify-between bg-white text-gray-800 py-3 px-4 rounded-md hover:bg-red-700 hover:text-white transition-colors duration-300">
                                             <span>{s.title}</span>
-                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <svg className="w-4 h-4 text-secondary group-hover:text-white group-[.bg-secondary]:text-white" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                                             </svg>
-                                        </a>
+                                        </ActiveLink>
                                     </li>
                                 ))}
                             </ul>
