@@ -3,12 +3,14 @@ import { ObjectId } from 'mongodb';
 import Image from 'next/image';
 import React from 'react';
 import ServiceBanner from '../ServiceBanner/ServiceBanner';
+import VideoPlayer from '../VideoPlayer/VideoPlayer';
 
 const ServiceDetails = async ({ params }) => {
     const id = params?.id;
 
     let service = null;
     let services = null;
+    let cleanService = {};
 
     try {
         // Validate ObjectId
@@ -22,6 +24,11 @@ const ServiceDetails = async ({ params }) => {
             throw new Error("Service not found");
         }
 
+        cleanService = {
+            ...service,
+            _id: service._id.toString(),
+        };
+
         // console.log(service);
 
     } catch (error) {
@@ -34,7 +41,7 @@ const ServiceDetails = async ({ params }) => {
         );
     }
     return (
-        <div className='w-11/12 mx-auto'>
+        <div className='w-11/12 lg:w-10/12 xl:w-9/12 mx-auto'>
             {/* Banner */}
             <ServiceBanner></ServiceBanner>
 
@@ -42,7 +49,7 @@ const ServiceDetails = async ({ params }) => {
 
             <section className="">
                 {/* Main Content Area */}
-                <div className="container mx-auto py-10 flex flex-col lg:flex-row gap-8">
+                <div className="py-10 flex flex-col lg:flex-row gap-8">
                     {/* Left Column - Main Content */}
                     <div className="lg:w-2/3">
                         {/* Main Image Section */}
@@ -79,14 +86,53 @@ const ServiceDetails = async ({ params }) => {
                         </div>
 
                         {/* 3 Simple Steps to Process Section */}
-                        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-                            <h2 className="text-3xl font-bold text-gray-800 mb-4">3 Simple Steps to Process</h2>
-                            <p className="text-gray-600 leading-relaxed">
-                                There Are Many Variations Of Passages Of Lorem Ipsum Available, But The Majority Have Suffered
-                                Alteration In Some Form, By Injected Humour, Or Randomised Words Which Don't Look Even
-                                Slightly Believable. If You Are Going To Use A Passage Of Lorem Ipsum, You Need To Be Sure There
-                                Isn't Anything Embarrassing Hidden In The Middle Of Text.
-                            </p>
+                        <div className="container mx-auto px-4 py-12">
+                            {/* Section Heading and Description */}
+                            <div className="mb-12">
+                                <h2 className="text-4xl font-bold text-gray-800 mb-4">3 Simple Steps to Process</h2>
+                                <p className="text-gray-600 leading-relaxed">
+                                    Our car service operation is streamlined into three simple steps to ensure efficiency and transparency.
+                                    From initial diagnosis to final quality checks, we prioritize clear communication and meticulous
+                                    attention to detail, ensuring your vehicle receives the best possible care without any hidden surprises.
+                                </p>
+                            </div>
+
+                            {/* Steps Grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                                {
+                                    service.three_steps.map((step, index) => (
+                                        <div key={index} className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
+                                            <div className="relative w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-red-600 text-white font-bold text-2xl">
+                                                {index + 1}
+                                                {/* You could replace '01' with an image if needed, e.g., <img src="/path/to/01.png" alt="Step 1" /> */}
+                                            </div>
+                                            <h3 className="text-xl font-semibold text-gray-800 mb-2">{step.title}</h3>
+                                            <p className="text-gray-600">{step.description}</p>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+
+                            {/* Large Image with Play Button */}
+                            {/* <div className="relative w-full rounded-lg overflow-hidden shadow-lg h-60 md:h-[400px] flex items-center justify-center">
+                                {service.youtube_video_link ? (
+                                    <iframe
+                                        className="absolute inset-0 w-full h-full"
+                                        src={service.youtube_video_link.replace("watch?v=", "embed/")}
+                                        title={`${service.title} Video`}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    ></iframe>
+                                ) : (
+                                    <img
+                                        src="https://repairsmith-prod-wordpress.s3.amazonaws.com/2022/09/car-repair.jpg" // Placeholder if no video link
+                                        alt="Video not available"
+                                        className="absolute inset-0 w-full h-full object-cover"
+                                    />
+                                )}
+                            </div> */}
+                            <VideoPlayer service={cleanService}></VideoPlayer>
                         </div>
                     </div>
 
@@ -157,6 +203,8 @@ const ServiceDetails = async ({ params }) => {
                                 Proceed Checkout
                             </button>
                         </div>
+
+
                     </div>
                 </div>
             </section>
