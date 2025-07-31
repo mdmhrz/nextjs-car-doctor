@@ -51,17 +51,22 @@ const ServiceDetails = async ({ params }) => {
 
             <section className="">
                 {/* Main Content Area */}
-                <div className="py-10 flex flex-col lg:flex-row gap-8">
+                <div className="py-10 mt-10 flex flex-col lg:flex-row gap-8">
                     {/* Left Column - Main Content */}
                     <div className="lg:w-2/3">
                         {/* Main Image Section */}
-                        <div className="relative w-full h-80 md:h-96 bg-gray-300 rounded-lg overflow-hidden shadow-lg mb-8">
-                            <img
-                                src={service.img} // Placeholder image
-                                alt="Car Engine Service"
-                                className="w-full h-full object-cover"
+                        <div className="w-full bg-gray-300 rounded-lg overflow-hidden shadow-lg mb-8">
+                            <Image
+                                src={service.img}
+                                alt={service.title}
+                                width={200}
+                                height={100}
+                                className="w-full max-h-[300px] xl:max-h-[500px] object-cover"
+                                sizes="100vw"
+                                priority
                             />
                         </div>
+
 
                         {/* Unique Car Engine Service Section */}
                         <div className="bg-white p-6 rounded-lg shadow-md mb-8">

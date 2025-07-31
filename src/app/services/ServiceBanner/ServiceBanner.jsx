@@ -16,7 +16,7 @@ const ServiceBanner = () => {
                 />
 
                 {/* Dark overlay */}
-                <div className="absolute inset-0 bg-black/60"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent"></div>
 
                 {/* Text Content */}
                 <div className="relative z-20 flex flex-col items-start justify-center h-full p-6 md:p-10 lg:p-16">

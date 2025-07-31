@@ -47,8 +47,10 @@ const Navbar = () => {
                     {navMenu()}
                 </ul>
             </div>
-            <div className="navbar-end">
-                <a className="btn btn-outline ">Appointment</a>
+            <div className="navbar-end flex items gap-3">
+                <a className="btn btn-outline rounded-md ">Appointment</a>
+                <Link className='btn text-white rounded-md bg-secondary border-secondary' href={'/auth/signup'}>Sign Up</Link>
+                <Link className='btn btn-outline text-secondary rounded-md' href={'/auth/login'}>Log In</Link>
             </div>
         </div>
     );
