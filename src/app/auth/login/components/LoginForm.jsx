@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import { FaFacebookF, FaLinkedinIn, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { signIn } from "next-auth/react"
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const LoginForm = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [formErrors, setFormErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
+    const [signingIn, setSigningIn] = useState(false)
     const router = useRouter()
 
     const handleChange = (e) => {
@@ -46,6 +48,7 @@ const LoginForm = () => {
 
     // Submit handler
     const handleSubmit = async (e) => {
+        setSigningIn(true)
         e.preventDefault();
 
         const errors = validateForm();
@@ -60,25 +63,25 @@ const LoginForm = () => {
                 redirect: false,
                 email,
                 password,
-                callbackUrl: '/',
             });
 
             if (response.ok) {
+                toast.success('Logged in successfully')
+                setFormData({ email: "", password: '' })
+                setFormErrors({});
+                setShowPassword(false);
                 router.push('/')
             } else {
-                alert('Authentication Failed')
+                toast.warn('Authentication failed')
+                setSigningIn(false)
                 return
             }
 
-            // setFormErrors({});
-            // setShowPassword(false);
 
         } catch (error) {
             console.log(error);
             alert('Authentication failed')
         }
-
-
     };
 
     return (
@@ -138,10 +141,42 @@ const LoginForm = () => {
             <div>
                 <button
                     type="submit"
-                    className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                    disabled={signingIn}
+                    className={`w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white
+    ${signingIn
+                            ? 'bg-secondary/70 cursor-wait'
+                            : 'bg-secondary hover:bg-red-700 focus:ring-red-500'}
+    focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-200`}
                 >
-                    Sign In
+                    {signingIn ? (
+                        <>
+                            <svg
+                                className="animate-spin h-5 w-5 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                            >
+                                <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                />
+                                <path
+                                    className="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
+                                />
+                            </svg>
+                            Signing In...
+                        </>
+                    ) : (
+                        'Sign In'
+                    )}
                 </button>
+
             </div>
 
             {/* Social Sign In Section */}

@@ -1,8 +1,19 @@
+'use client'
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
+import LogoutConfirmModal from './LogoutConfirmModal';
+import ConfirmModal from '@/app/components/ConfirmModal';
 
 const Navbar = () => {
+    const { data: session, status } = useSession();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const handleLogout = () => {
+        signOut()
+    };
+
+
     const navMenu = () => {
         return (
             <>
@@ -49,8 +60,24 @@ const Navbar = () => {
             </div>
             <div className="navbar-end flex items gap-3">
                 <a className="btn btn-outline rounded-md ">Appointment</a>
-                <Link className='btn text-white rounded-md bg-secondary border-secondary' href={'/auth/signup'}>Sign Up</Link>
-                <Link className='btn btn-outline text-secondary rounded-md' href={'/auth/login'}>Log In</Link>
+                {
+                    status == 'authenticated' ? <>
+                        <button onClick={() => setIsModalOpen(true)} className='btn btn-secondary text-white rounded-md'>Logout</button>
+                        <ConfirmModal
+                            isOpen={isModalOpen}
+                            onClose={() => setIsModalOpen(false)}
+                            onConfirm={handleLogout}
+                            title="Confirm Logout"
+                            message="Are you sure you want to log out?"
+                            confirmText="Log out"
+                            cancelText="Stay"
+                            confirmColor="bg-secondary hover:bg-red-700"
+                        />
+                    </> : <>
+                        <Link className='btn text-white rounded-md bg-secondary border-secondary' href={'/auth/signup'}>Sign Up</Link>
+                        <Link className='btn btn-outline text-secondary rounded-md' href={'/auth/login'}>Log In</Link>
+                    </>
+                }
             </div>
         </div>
     );
