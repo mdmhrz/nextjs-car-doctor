@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { FaEdit, FaTrash, FaCalendarAlt, FaMoneyBillWave, FaCheckCircle, FaTimesCircle, FaSpinner } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
+import Link from 'next/link';
 
 const statusColors = {
     pending: 'bg-amber-100 text-amber-800',
@@ -115,13 +116,15 @@ const MyBookingsTable = ({ bookings }) => {
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div className="flex justify-end space-x-2">
-                                        <button
-                                            onClick={() => handleEdit(booking._id)}
-                                            className="text-gray-600 hover:text-indigo-900 p-2 rounded-full hover:bg-indigo-50"
-                                            title="Edit"
-                                        >
-                                            <FaEdit size={16} />
-                                        </button>
+                                        <Link href={`/myBookings/${booking._id}`}>
+                                            <button
+                                                // onClick={() => handleEdit(booking._id)}
+                                                className="text-gray-600 hover:text-indigo-900 p-2 rounded-full hover:bg-indigo-50"
+                                                title="Edit"
+                                            >
+                                                <FaEdit size={16} />
+                                            </button>
+                                        </Link>
                                         <button
                                             // onClick={() => handleDelete(booking._id)}
                                             onClick={() => setIsModalOpen(true)}

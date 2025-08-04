@@ -3,8 +3,8 @@ import PageBanner from '@/app/components/PageBanner/PageBanner';
 import React from 'react';
 
 const Checkout = async ({ params }) => {
-    const p = params;
-    const singleServiceResponse = await fetch(`http://localhost:3000/api/service/${p.id}`)
+    const p = await params;
+    const singleServiceResponse = await fetch(`https://nextjs-car-doctor-amber.vercel.app/api/service/${p.id}`)
     const service = await singleServiceResponse.json();
 
 
