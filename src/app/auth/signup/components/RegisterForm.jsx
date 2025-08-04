@@ -2,6 +2,7 @@
 import { registerUser } from '@/app/actions/auth/registerUser';
 import React, { useState } from 'react';
 import { FaFacebookF, FaLinkedinIn, FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
+import SocialLogin from '../../SocialLogin/SocialLogin';
 
 const RegisterForm = () => {
     const [formData, setFormData] = useState({
@@ -133,23 +134,8 @@ const RegisterForm = () => {
                         Sign Up
                     </button>
                 </div>
-
-                {/* Social */}
-                <div className="mt-8 text-center">
-                    <p className="text-gray-500">Or Sign Up with</p>
-                    <div className="mt-4 flex justify-center space-x-4">
-                        <button className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition-colors">
-                            <FaFacebookF className="text-lg text-blue-600" />
-                        </button>
-                        <button className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition-colors">
-                            <FaLinkedinIn className="text-lg text-blue-700" />
-                        </button>
-                        <button className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition-colors">
-                            <FaGoogle className="text-lg text-red-600" />
-                        </button>
-                    </div>
-                </div>
             </form>
+            <SocialLogin></SocialLogin>
         </div>
     );
 };

@@ -2,24 +2,21 @@ import dbConnect, { collectionName } from '@/lib/dbConnect';
 import { ObjectId } from 'mongodb';
 import Image from 'next/image';
 import React from 'react';
-import ServiceBanner from '../ServiceBanner/ServiceBanner';
+import PageBanner from '../../components/PageBanner/PageBanner';
 import VideoPlayer from '../VideoPlayer/VideoPlayer';
+import ActiveLink from '@/app/components/ActiveLinks/ActiveLink';
 import Link from 'next/link';
-import ActiveLink from '@/app/components/ActiveLink';
 
 const ServiceDetails = async ({ params }) => {
-    const id = params?.id;
+    const p = params;
+    const singleServiceResponse = await fetch(`http://localhost:3000/api/service/${p.id}`)
+    const service = await singleServiceResponse.json();
 
-    let service = null;
     let services = null;
     let cleanService = {};
 
     try {
-        // Validate ObjectId
-        if (!ObjectId.isValid(id)) throw new Error("Invalid ID");
-
         const servicesCollection = await dbConnect(collectionName.SERVICES);
-        service = await servicesCollection.findOne({ _id: new ObjectId(id) });
         services = await servicesCollection.find({}).toArray();
 
         if (!service) {
@@ -28,7 +25,8 @@ const ServiceDetails = async ({ params }) => {
 
         cleanService = {
             ...service,
-            _id: service._id.toString(),
+            // _id: service._id.toString(),
+            _id: service._id,
         };
 
         // console.log(service);
@@ -45,7 +43,11 @@ const ServiceDetails = async ({ params }) => {
     return (
         <div className='w-11/12 lg:w-10/12 xl:w-9/12 mx-auto'>
             {/* Banner */}
-            <ServiceBanner></ServiceBanner>
+            <PageBanner
+                title="Service Details"
+                image="/assets/images/banner/4.jpg"
+                breadcrumbText="Home / Service Details"
+            />
 
             {/* Service Details Section */}
 
@@ -57,8 +59,8 @@ const ServiceDetails = async ({ params }) => {
                         {/* Main Image Section */}
                         <div className="w-full bg-gray-300 rounded-lg overflow-hidden shadow-lg mb-8">
                             <Image
-                                src={service.img}
-                                alt={service.title}
+                                src={service?.img}
+                                alt={service?.title}
                                 width={200}
                                 height={100}
                                 className="w-full max-h-[300px] xl:max-h-[500px] object-cover"
@@ -70,14 +72,14 @@ const ServiceDetails = async ({ params }) => {
 
                         {/* Unique Car Engine Service Section */}
                         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-                            <h2 className="text-3xl font-bold text-gray-800 mb-4">{service.title}</h2>
-                            <p className="text-gray-600 leading-relaxed">{service.description}</p>
+                            <h2 className="text-3xl font-bold text-gray-800 mb-4">{service?.title}</h2>
+                            <p className="text-gray-600 leading-relaxed">{service?.description}</p>
                         </div>
 
                         {/* Service Features Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                             {
-                                service.facility.map((f, i) => (
+                                service?.facility?.map((f, i) => (
                                     <div key={i} className="bg-base-300 p-6 rounded-lg shadow-md border-t-3 border-secondary/50">
                                         <h3 className="text-xl font-semibold text-gray-800 mb-2">{f.name}</h3>
                                         <p className="text-gray-600">{f.details}</p>
@@ -89,7 +91,7 @@ const ServiceDetails = async ({ params }) => {
 
                         {/* Second Description Block */}
                         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-                            <p className="text-gray-600 leading-relaxed">{service.additional_details}</p>
+                            <p className="text-gray-600 leading-relaxed">{service?.additional_details}</p>
                         </div>
 
                         {/* 3 Simple Steps to Process Section */}
@@ -107,7 +109,7 @@ const ServiceDetails = async ({ params }) => {
                             {/* Steps Grid */}
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                                 {
-                                    service.three_steps.map((step, index) => (
+                                    service?.three_steps?.map((step, index) => (
                                         <div key={index} className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
                                             <div className="relative w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-red-600 text-white font-bold text-2xl">
                                                 {index + 1}
@@ -131,7 +133,7 @@ const ServiceDetails = async ({ params }) => {
                         <div className="bg-base-300 p-6 rounded-lg shadow-md">
                             <h3 className="text-xl font-semibold text-gray-800 mb-4">Services</h3>
                             <ul className="space-y-3">
-                                {services.map((s, index) => (
+                                {services?.map((s, index) => (
                                     <li key={index}>
                                         <ActiveLink href={`/services/${s._id}`} activeClassName='bg-secondary text-white' className="group flex items-center justify-between bg-white text-gray-800 py-3 px-4 rounded-md hover:bg-red-700 hover:text-white transition-colors duration-300">
                                             <span>{s.title}</span>
@@ -187,10 +189,12 @@ const ServiceDetails = async ({ params }) => {
 
                         {/* Price Section */}
                         <div className="bg-white p-6 rounded-lg shadow-md">
-                            <h3 className="text-xl font-bold text-gray-800 mb-4">Price ${service.price}</h3>
-                            <button className="w-full bg-red-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-red-700 transition-colors duration-300">
-                                Proceed Checkout
-                            </button>
+                            <h3 className="text-xl font-bold text-gray-800 mb-4">Price ${service?.price}</h3>
+                            <Link href={`/checkout/${p.id}`}>
+                                <button className="w-full bg-red-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-red-700 transition-colors duration-300">
+                                    Proceed Checkout
+                                </button>
+                            </Link>
                         </div>
 
 

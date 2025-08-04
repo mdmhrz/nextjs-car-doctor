@@ -3,8 +3,8 @@ import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import LogoutConfirmModal from './LogoutConfirmModal';
-import ConfirmModal from '@/app/components/ConfirmModal';
+// import LogoutConfirmModal from './LogoutConfirmModal';
+import ConfirmModal from '@/app/components/ConfirmModal/ConfirmModal';
 
 const Navbar = () => {
     const { data: session, status } = useSession();
@@ -32,6 +32,9 @@ const Navbar = () => {
                 <li>
                     <Link href={'/contacts'}>Contacts</Link>
                 </li>
+                {
+                    session && <li><Link href={'/myBookings'}>My Bookings</Link></li>
+                }
             </>
         )
     }
@@ -62,6 +65,7 @@ const Navbar = () => {
                 <a className="btn btn-outline rounded-md ">Appointment</a>
                 {
                     status == 'authenticated' ? <>
+                        <Image src={session?.user?.image} width={40} height={30} className='rounded-full border border-gray-700 p-1 cursor-pointer' title={session?.user?.name} alt='user-image'></Image>
                         <button onClick={() => setIsModalOpen(true)} className='btn btn-secondary text-white rounded-md'>Logout</button>
                         <ConfirmModal
                             isOpen={isModalOpen}
@@ -72,6 +76,7 @@ const Navbar = () => {
                             confirmText="Log out"
                             cancelText="Stay"
                             confirmColor="bg-secondary hover:bg-red-700"
+                            toastMsg="You've successfully logged out"
                         />
                     </> : <>
                         <Link className='btn text-white rounded-md bg-secondary border-secondary' href={'/auth/signup'}>Sign Up</Link>
