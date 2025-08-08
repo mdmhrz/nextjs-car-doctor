@@ -1,4 +1,5 @@
 # CarDoctor
+Your smart assistant for car repair, maintenance, and hassle-free service booking.
 
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://nextjs-car-doctor-amber.vercel.app/)
 [![License](https://img.shields.io/github/license/mdmhrz/nextjs-car-doctor?style=for-the-badge)](https://github.com/mdmhrz/nextjs-car-doctor/blob/main/LICENSE)
@@ -20,7 +21,6 @@ The app supports:
 
 ## 🛠 Tech Stack & Packages Used
 
-## Tech Stack
 [![Tech Stack](https://skillicons.dev/icons?i=nextjs,react,mongodb,tailwind,figma)](https://skillicons.dev)  
 **Framework:** Next.js (v15.4.5)  
 **React:** 19.1.0  
@@ -32,7 +32,6 @@ The app supports:
 **Icons:** React Icons  
 **Security:** bcrypt for password hashing  
 **Other utilities:** clsx, tailwind-merge  
-
 
 ---
 
