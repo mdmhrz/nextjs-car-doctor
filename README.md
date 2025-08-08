@@ -20,18 +20,24 @@ The app supports:
 
 ## 🛠 Tech Stack & Packages Used
 
-- **Framework:** Next.js (v15.4.5)
-- **React:** 19.1.0
-- **Authentication:** next-auth (Social and Credential login)
-- **Database:** MongoDB
-- **Styling:** Tailwind CSS, DaisyUI
-- **Animations:** Framer Motion
-- **Notifications:** React Toastify
-- **Icons:** React Icons
-- **Security:** bcrypt for password hashing
-- **Other utilities:** clsx, tailwind-merge
+## Tech Stack
+[![Tech Stack](https://skillicons.dev/icons?i=nextjs,react,mongodb,tailwind,figma)](https://skillicons.dev)  
+**Framework:** Next.js (v15.4.5)  
+**React:** 19.1.0  
+**Authentication:** next-auth (Social and Credential login)  
+**Database:** MongoDB  
+**Styling:** Tailwind CSS, DaisyUI  
+**Animations:** Framer Motion  
+**Notifications:** React Toastify  
+**Icons:** React Icons  
+**Security:** bcrypt for password hashing  
+**Other utilities:** clsx, tailwind-merge  
+
 
 ---
+
+
+
 
 ## 🚀 Live Demo
 
